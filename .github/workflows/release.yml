@@ -1,0 +1,89 @@
+name: Release
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+jobs:
+  Build:
+    if: github.event.pull_request.merged == true
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          # Windows builds
+          - os: windows-latest
+            rid: win-x64
+            os-short: Windows
+            arch: x64
+          - os: windows-latest
+            rid: win-arm64
+            os-short: Windows
+            arch: arm64
+          # Linux Ubuntu builds
+          - os: ubuntu-latest
+            rid: linux-x64
+            os-short: Linux
+            arch: x64
+          - os: ubuntu-latest
+            rid: linux-arm64
+            os-short: Linux
+            arch: arm64
+          # Linux Debian builds
+          - os: ubuntu-latest
+            rid: linux-x64
+            os-short: Debian
+            arch: x64
+          - os: ubuntu-latest
+            rid: linux-arm64
+            os-short: Debian
+            arch: arm64
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Publish app
+        run: dotnet publish -c Release -r ${{ matrix.rid }} -o ./publish
+      - name: Zip artifact
+        shell: pwsh
+        run: |
+          Compress-Archive -Path ./publish -DestinationPath ./${{ matrix.os-short }}_${{ matrix.arch }}_${{ github.sha }}.zip
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.os-short }}_${{ matrix.arch }}_${{ github.sha }}
+          path: ./${{ matrix.os-short }}_${{ matrix.arch }}_${{ github.sha }}.zip
+
+  Release:
+    needs: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+      - name: Create Release Draft
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./artifacts/**/*
+          draft: true
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 通知发布草稿已创建
+        run: |
+          echo "✅ 发布草稿已成功创建！"
+          echo "📝 请检查并编辑发布草稿："
+          echo "🔗 ${{ github.server_url }}/${{ github.repository }}/releases"
+          echo "📌 请记得："
+          echo "   1. 添加详细的发行说明"
+          echo "   2. 如果需要，请指定预发行状态"
+          echo "   3. 准备就绪后发布"

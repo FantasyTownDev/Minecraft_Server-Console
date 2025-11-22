@@ -1,0 +1,59 @@
+name: CI Check
+
+on:
+  pull_request:
+    branches: [ main, dev ]
+  push:
+    branches-ignore: [ main, dev ]
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  checkout:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          # Windows builds
+          - os: windows-latest
+            rid: win-x64
+            os-short: Windows
+            arch: x64
+          - os: windows-latest
+            rid: win-arm64
+            os-short: Windows
+            arch: arm64
+          # Linux Ubuntu builds
+          - os: ubuntu-latest
+            rid: linux-x64
+            os-short: Linux
+            arch: x64
+          - os: ubuntu-latest
+            rid: linux-arm64
+            os-short: Linux
+            arch: arm64
+          # Linux Debian builds
+          - os: ubuntu-latest
+            rid: linux-x64
+            os-short: Debian
+            arch: x64
+          - os: ubuntu-latest
+            rid: linux-arm64
+            os-short: Debian
+            arch: arm64
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+      - name: Restore
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
