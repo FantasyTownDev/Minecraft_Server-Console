@@ -1,5 +1,5 @@
 ﻿using Fantasy.MinecraftServerConsole.Hubs;
-using Fantasy.MinecraftServerConsole.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
