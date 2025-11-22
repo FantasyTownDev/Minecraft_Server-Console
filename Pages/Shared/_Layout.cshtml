@@ -3,10 +3,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Fantasy.MinecraftServerConsole</title>
+    <title>@ViewData["Title"] - F-MCSC</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Fantasy.MinecraftServerConsole.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Fantasy_Minecraft_Server_Console.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false)
 </head>
 <body>
     <header>
@@ -31,11 +33,19 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025-@DateTime.Today.Year.ToString() <a href="https://fantasytown.cn">幻梦之乡-FantasyTown</a> All rights reserved.
+            &copy; 
+            @{string year = DateTime.Now.Year.ToString();
+            if (year == "2025")
+                @year
+            else
+                @($"2024 - {year} ")
+            }
+            <a href="https://fantasytown.cn">幻梦之乡-FantasyTown</a> All rights reserved.
         </div>
     </footer>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
