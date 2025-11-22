@@ -68,4 +68,6 @@
 > 功能完成后请在 To Do List 对应项打勾，并在 CHANGELOG.md 追加记录。
 
 ## 开源许可证
-[GUN General Public License v3.0](https://github.com/FantasyTownDev/Minecraft_Server-Console/blob/main/LICENSE)
+源代码遵循 [GUN General Public License v3.0](https://github.com/FantasyTownDev/Minecraft_Server-Console/blob/main/LICENSE) 协议 
+
+Copyright ©2025 FantasyTownDev.
