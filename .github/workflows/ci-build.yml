@@ -1,10 +1,8 @@
 name: CI Build
 
-on: 
-  pull_request:
+on:
+  push:
     branches: [ dev ]
-    types:
-      - closed
 
 permissions:
   contents: read
@@ -12,9 +10,6 @@ permissions:
 
 jobs:
   Build:
-    if: >
-      github.event.pull_request.merged == true &&
-      github.event.pull_request.base.ref == 'dev'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
