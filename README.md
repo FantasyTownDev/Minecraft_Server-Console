@@ -57,12 +57,12 @@
 
 ## 待办清单（To Do List）  
 - [ ] 创建 `Services/ServerService.cs`：封装 `java -jar server.jar` 启停  
-- [ ] 创建 `Hubs/LogHub.cs`：SignalR 推送控制台日志  
+- [x] 创建 `Hubs/LogHub.cs`：SignalR 推送控制台日志  
 - [ ] 修改 `Index.cshtml`：添加启动/停止按钮与 `<pre id="log">` 面板  
 - [ ] 日志滚动与前端命令输入框  
 - [ ] 实现用户创建与登录
 - [ ] 玩家在线列表接口  
-- [ ] GitHub Actions 自动构建 & 单元测试  
+- [x] GitHub Actions 自动构建 & 单元测试  
 - [ ] 发布 Release 并上传二进制包  
 
 > 功能完成后请在 To Do List 对应项打勾，并在 CHANGELOG.md 追加记录。
