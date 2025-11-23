@@ -1,4 +1,5 @@
 ﻿using Fantasy.MinecraftServerConsole.Hubs;
+using Fantasy.MinecraftServerConsole.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
+builder.Services.AddHostedService<ServerService>();
 
 var app = builder.Build();
 
