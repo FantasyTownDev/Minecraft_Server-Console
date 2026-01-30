@@ -1,4 +1,4 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -8,9 +8,14 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    app.UseExceptionHandler("/error");
+    app.UseStatusCodePagesWithReExecute("/error/{0}");
+}
+else
+{
+    // 开发环境也使用自定义错误页，但显示详细信息
+    app.UseExceptionHandler("/error");
+    app.UseStatusCodePagesWithReExecute("/error/{0}");
 }
 
 app.UseHttpsRedirection();

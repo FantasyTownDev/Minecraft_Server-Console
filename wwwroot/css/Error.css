@@ -1,0 +1,480 @@
+/* ============================================
+   F-MCSC Error Page - Minecraft Style
+   TNT 图标 | 红色警戒 | 3D像素按钮
+   ============================================ */
+
+:root {
+    --mc-red: #d13636;
+    --mc-red-dark: #a02722;
+    --mc-red-light: #e04e4e;
+    --mc-dirt: #866043;
+    --mc-dirt-dark: #6b4d36;
+    --mc-button-bg: #7e7e7e;
+    --mc-button-hover: #929292;
+    --mc-bg: #1a1a1a;
+    --mc-panel: #2a2a2a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    image-rendering: pixelated;
+    border-radius: 0 !important;
+}
+
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--mc-bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: #fff;
+    overflow: hidden;
+    padding: 40px 20px;
+}
+
+/* Dirt 背景 */
+.dirt-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #1a1a1a;
+    background-image: repeating-linear-gradient(90deg, transparent, transparent 32px, rgba(0,0,0,0.1) 32px, rgba(0,0,0,0.1) 64px), repeating-linear-gradient(0deg, transparent, transparent 32px, rgba(0,0,0,0.1) 32px, rgba(0,0,0,0.1) 64px);
+    z-index: 0;
+}
+
+/* 顶部红色警告条 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    background: repeating-linear-gradient( 90deg, var(--mc-red) 0px, var(--mc-red) 16px, var(--mc-red-dark) 16px, var(--mc-red-dark) 32px );
+    border-bottom: 4px solid #000;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.5);
+    z-index: 100;
+}
+
+/* 底部泥土条 */
+body::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    background: repeating-linear-gradient( 90deg, var(--mc-dirt) 0px, var(--mc-dirt) 16px, var(--mc-dirt-dark) 16px, var(--mc-dirt-dark) 32px );
+    border-top: 4px solid #000;
+    box-shadow: 0 -4px 0 rgba(0,0,0,0.5);
+    z-index: 100;
+}
+
+/* 错误容器 */
+.error-container {
+    background: var(--mc-panel);
+    border: 4px solid #000;
+    box-shadow: inset 0 0 0 4px #3a3a3a, inset 0 0 0 8px #000, 0 8px 0 rgba(0,0,0,0.5);
+    padding: 48px;
+    max-width: 640px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+/* 红色警戒角标 */
+.corner {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: var(--mc-red);
+    border: 2px solid #000;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.3);
+    z-index: 11;
+}
+
+.corner-tl {
+    top: 4px;
+    left: 4px;
+}
+
+.corner-tr {
+    top: 4px;
+    right: 4px;
+}
+
+.corner-bl {
+    bottom: 4px;
+    left: 4px;
+}
+
+.corner-br {
+    bottom: 4px;
+    right: 4px;
+}
+
+/* TNT 图标 */
+.error-tnt {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 24px;
+    position: relative;
+    animation: tnt-bounce 1s steps(4) infinite;
+}
+
+.tnt-body {
+    width: 100%;
+    height: 100%;
+    background: var(--mc-red);
+    border: 4px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: inset 0 0 0 8px rgba(255,255,255,0.1), inset 0 0 0 16px rgba(0,0,0,0.1);
+}
+
+    .tnt-body::before {
+        content: '';
+        position: absolute;
+        top: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 24px;
+        height: 8px;
+        background: #444;
+        border: 2px solid #000;
+        border-bottom: none;
+    }
+
+.tnt-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 2px 2px 0 #000;
+    letter-spacing: 2px;
+}
+
+.spark {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 8px;
+    background: #ff0;
+    border: 1px solid #000;
+    animation: spark-flicker 0.3s steps(2) infinite;
+}
+
+@keyframes tnt-bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes spark-flicker {
+    0%, 100% {
+        opacity: 1;
+        height: 8px;
+    }
+
+    50% {
+        opacity: 0.5;
+        height: 12px;
+    }
+}
+
+/* 错误文本 */
+.error-header {
+    margin-bottom: 24px;
+}
+
+.error-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--mc-red-light);
+    text-shadow: 2px 2px 0 #000;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.error-desc {
+    color: #aaa;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* 追踪 ID 块 */
+.trace-id-block {
+    display: inline-block;
+    background: #000;
+    border: 2px solid #333;
+    padding: 12px 20px;
+    margin: 16px 0 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+}
+
+    .trace-id-block .label {
+        color: #666;
+        margin-right: 8px;
+    }
+
+.id-code {
+    color: var(--mc-red);
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* 按钮区域 - 水平排列 */
+.action-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+/* ============================================
+   3D 像素按钮系统 - 与 Login 统一
+   ============================================ */
+
+.mc-button {
+    position: relative;
+    display: inline-flex;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: 'Noto Sans SC', sans-serif;
+    text-decoration: none;
+    padding: 0;
+    outline: none;
+    min-width: 160px;
+}
+
+    .mc-button .btn-shadow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: -6px;
+        background: #000;
+        transition: bottom 0.1s;
+    }
+
+    .mc-button .btn-content {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: var(--mc-button-bg);
+        border: 2px solid #000;
+        padding: 12px 20px;
+        color: #fff;
+        font-size: 0.95rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        width: 100%;
+        transition: transform 0.1s, background 0.2s;
+    }
+
+    .mc-button:hover .btn-content {
+        background: var(--mc-button-hover);
+    }
+
+    .mc-button:active .btn-content {
+        transform: translateY(6px);
+    }
+
+    .mc-button:active .btn-shadow {
+        bottom: 0;
+    }
+
+    /* 次要按钮（红色系） */
+    .mc-button.secondary .btn-content {
+        background: #555;
+    }
+
+    .mc-button.secondary:hover .btn-content {
+        background: #666;
+    }
+
+    .mc-button .icon {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+    }
+
+/* 详情区域 */
+.details-section {
+    margin-top: 24px;
+    border-top: 4px solid #3a3a3a;
+    padding-top: 24px;
+}
+
+.details-toggle {
+    width: 100%;
+    background: #333;
+    border: 2px solid #000;
+    color: #aaa;
+    padding: 12px;
+    cursor: pointer;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+    .details-toggle:hover {
+        background: #3a3a3a;
+        color: #fff;
+    }
+
+    .details-toggle .arrow {
+        width: 20px;
+        height: 20px;
+        transition: transform 0.3s;
+    }
+
+    .details-toggle.active .arrow {
+        transform: rotate(180deg);
+    }
+
+.details-content {
+    margin-top: 8px;
+    background: #111;
+    border: 2px solid #333;
+    text-align: left;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+    .details-content.hidden {
+        display: none;
+    }
+
+.details-toolbar {
+    background: #222;
+    border-bottom: 2px solid #333;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.toolbar-title {
+    color: #888;
+    font-weight: 700;
+}
+
+.copy-btn {
+    background: #444;
+    border: 2px solid #555;
+    color: #fff;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+    .copy-btn:hover {
+        background: #555;
+        border-color: #666;
+    }
+
+.details-content pre {
+    margin: 0;
+    padding: 16px;
+    color: #888;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    max-height: 200px;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+    /* 滚动条样式 */
+    .details-content pre::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+
+    .details-content pre::-webkit-scrollbar-track {
+        background: #111;
+    }
+
+    .details-content pre::-webkit-scrollbar-thumb {
+        background: #333;
+        border: 2px solid #111;
+    }
+
+/* 页脚 */
+.error-footer {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 2px solid #3a3a3a;
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.footer-line {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+    .footer-line .label {
+        color: #444;
+    }
+
+    .footer-line .value {
+        color: #555;
+    }
+
+/* 响应式 */
+@media (max-width: 480px) {
+    .error-container {
+        padding: 32px 24px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .mc-button {
+        width: 100%;
+    }
+
+    body::before, body::after {
+        height: 24px;
+    }
+
+    .error-tnt {
+        width: 64px;
+        height: 64px;
+    }
+}
