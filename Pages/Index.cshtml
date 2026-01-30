@@ -1,7 +1,7 @@
-﻿@page
+@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Loading...";
+    ViewData["Title"] = "正在加载...";
     Layout = null;
 }
 
@@ -12,19 +12,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="refresh" content="@Model.Seconds; url=@Model.NextUrl" />
     <title>@ViewData["Title"] - F-MCSC</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Fantasy_Minecraft_Server_Console.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/Index.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="grid d-flex justify-content-center align-items-center gap-3" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
-        <div class="loader" />
-        <div class="m-3 text-center fs-4" style="font-weight: bold;">Loading...</div>
+    <!-- 像素 Dirt 背景纹理 -->
+    <div class="dirt-bg"></div>
+
+    <!-- 加载容器 -->
+    <div class="mc-container">
+        <!-- 四角装饰 -->
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
+
+        <!-- 草方块加载动画 -->
+        <div class="grass-block">
+            <div class="grass-top"></div>
+            <div class="dirt-body"></div>
+            <div class="face face-left"></div>
+            <div class="face face-right"></div>
+        </div>
+
+        <!-- 文字信息 -->
+        <div class="text-content">
+            <div class="mc-title">SYSTEM INITIALIZING</div>
+            <div class="mc-subtitle">
+                正在加载会话状态<br>
+                <span class="countdown" data-seconds="@Model.Seconds">@Model.Seconds</span> 秒后跳转至 @(Model.NextUrl == "/login" ? "登录界面" : "控制台")
+            </div>
+
+            <!-- 像素进度条 -->
+            <div class="mc-progress">
+                <div class="mc-progress-bar" data-duration="@Model.Seconds"></div>
+            </div>
+
+            <!-- 状态文本 -->
+            <div class="status-text">
+                <span class="bracket">[</span>
+                <span class="status">验证中</span>
+                <span class="bracket">]</span>
+            </div>
+        </div>
     </div>
 
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
-
+    <script src="~/js/Index.js" asp-append-version="true"></script>
 </body>
 </html>
