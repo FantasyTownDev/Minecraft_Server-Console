@@ -1,0 +1,481 @@
+/* ============================================
+   F-MCSC Login - Minecraft Menu Style
+   仿 MC 主菜单 | 3D按钮 | 纯直角像素
+   ============================================ */
+
+:root {
+    --mc-green: #3C8527;
+    --mc-green-light: #5A9E3D;
+    --mc-green-dark: #2a631c;
+    --mc-dirt: #866043;
+    --mc-dirt-dark: #6b4d36;
+    --mc-button-bg: #7e7e7e;
+    --mc-button-hover: #929292;
+    --mc-bg: #1a1a1a;
+    --mc-panel: #2a2a2a;
+    --mc-border: #000000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    image-rendering: pixelated;
+    border-radius: 0 !important;
+}
+
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--mc-bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: #fff;
+    overflow: hidden;
+}
+
+/* Dirt 背景 */
+.dirt-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #1a1a1a;
+    background-image: repeating-linear-gradient(90deg, transparent, transparent 32px, rgba(0,0,0,0.1) 32px, rgba(0,0,0,0.1) 64px), repeating-linear-gradient(0deg, transparent, transparent 32px, rgba(0,0,0,0.1) 32px, rgba(0,0,0,0.1) 64px);
+    z-index: 0;
+}
+
+/* 顶部草地装饰条 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    background: repeating-linear-gradient( 90deg, var(--mc-green) 0px, var(--mc-green) 16px, var(--mc-green-dark) 16px, var(--mc-green-dark) 32px );
+    border-bottom: 4px solid #000;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.5);
+    z-index: 100;
+}
+
+/* 底部泥土装饰条 */
+body::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    background: repeating-linear-gradient( 90deg, var(--mc-dirt) 0px, var(--mc-dirt) 16px, var(--mc-dirt-dark) 16px, var(--mc-dirt-dark) 32px );
+    border-top: 4px solid #000;
+    box-shadow: 0 -4px 0 rgba(0,0,0,0.5);
+    z-index: 100;
+}
+
+/* 登录容器 - 仿游戏内 UI 面板 */
+.login-container {
+    background: var(--mc-panel);
+    border: 4px solid #000;
+    box-shadow: inset 0 0 0 4px #3a3a3a, inset 0 0 0 8px #000, 0 8px 0 rgba(0,0,0,0.5);
+    padding: 48px;
+    width: 100%;
+    max-width: 440px;
+    position: relative;
+    z-index: 10;
+    margin: 40px 20px;
+}
+
+/* 角标装饰 */
+.corner {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #757575;
+    border: 2px solid #000;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2);
+    z-index: 11;
+}
+
+.corner-tl {
+    top: 4px;
+    left: 4px;
+}
+
+.corner-tr {
+    top: 4px;
+    right: 4px;
+}
+
+.corner-bl {
+    bottom: 4px;
+    left: 4px;
+}
+
+.corner-br {
+    bottom: 4px;
+    right: 4px;
+}
+
+/* Logo 区域 */
+.logo-section {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.mc-logo {
+    margin-bottom: 16px;
+    display: inline-block;
+}
+
+.logo-cube {
+    width: 64px;
+    height: 64px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.cube-face {
+    width: 100%;
+    height: 100%;
+    background: var(--mc-green);
+    border: 4px solid #000;
+    box-shadow: inset 0 0 0 8px rgba(0,0,0,0.1), inset 0 0 0 16px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+    .cube-face::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 40%;
+        background: var(--mc-dirt);
+        border-top: 2px solid #000;
+        background-image: repeating-linear-gradient( 90deg, transparent, transparent 4px, rgba(0,0,0,0.1) 4px, rgba(0,0,0,0.1) 8px );
+    }
+
+.mc-title {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 2px 2px 0 #000;
+    margin-bottom: 4px;
+    letter-spacing: 2px;
+}
+
+.mc-subtitle {
+    color: #888;
+    font-size: 0.9rem;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* 表单区域 */
+.mc-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.block-label {
+    font-size: 0.85rem;
+    color: #aaa;
+    font-weight: 500;
+    padding-left: 4px;
+}
+
+/* 输入框容器 */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 12px;
+    width: 24px;
+    height: 24px;
+    color: #666;
+    pointer-events: none;
+    z-index: 2;
+}
+
+    .input-icon svg {
+        width: 100%;
+        height: 100%;
+    }
+
+/* MC 风格输入框 */
+.mc-input {
+    width: 100%;
+    background: #000;
+    border: 2px solid #444;
+    color: #fff;
+    font-size: 1rem;
+    padding: 14px 14px 14px 44px;
+    font-family: 'Noto Sans SC', sans-serif;
+    outline: none;
+    transition: all 0.1s;
+}
+
+    .mc-input:focus {
+        border-color: var(--mc-green);
+        background: #111;
+    }
+
+    .mc-input::placeholder {
+        color: #555;
+    }
+
+/* 密码可见性切换 */
+.toggle-btn {
+    position: absolute;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+    .toggle-btn:hover {
+        color: var(--mc-green-light);
+    }
+
+/* 选项栏 */
+.options-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 4px;
+}
+
+/* MC 风格复选框 */
+.mc-checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: #aaa;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+    .mc-checkbox-wrapper:hover {
+        color: #fff;
+    }
+
+.mc-checkbox {
+    display: none;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    background: #000;
+    border: 2px solid #555;
+    position: relative;
+    transition: all 0.1s;
+}
+
+.mc-checkbox:checked + .checkmark {
+    background: var(--mc-green);
+    border-color: var(--mc-green);
+}
+
+    .mc-checkbox:checked + .checkmark::after {
+        content: '✓';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+        font-weight: 900;
+        font-size: 14px;
+    }
+
+/* 链接文本 */
+.link-text {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+    border-bottom: 2px solid transparent;
+}
+
+    .link-text:hover {
+        color: var(--mc-green-light);
+        border-bottom-color: var(--mc-green-light);
+    }
+
+    .link-text.highlight {
+        color: var(--mc-green);
+        font-weight: 700;
+    }
+
+/* ============================================
+   MC 风格 3D 按钮 - 核心视觉元素
+   ============================================ */
+
+.mc-button {
+    position: relative;
+    width: 100%;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: 'Noto Sans SC', sans-serif;
+    margin-top: 8px;
+    padding: 0;
+    outline: none;
+}
+
+    .mc-button .btn-shadow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: -6px;
+        background: #000;
+        transition: bottom 0.1s;
+    }
+
+    .mc-button .btn-content {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: var(--mc-button-bg);
+        border: 2px solid #000;
+        padding: 14px 24px;
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        transition: transform 0.1s, background 0.2s;
+    }
+
+    .mc-button:hover .btn-content {
+        background: var(--mc-button-hover);
+    }
+
+    .mc-button:active .btn-content {
+        transform: translateY(6px);
+    }
+
+    .mc-button:active .btn-shadow {
+        bottom: 0;
+    }
+
+    /* 主要按钮（绿色） */
+    .mc-button.primary .btn-content {
+        background: var(--mc-green);
+        color: #fff;
+        text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    }
+
+    .mc-button.primary:hover .btn-content {
+        background: var(--mc-green-light);
+    }
+
+    .mc-button.primary:active .btn-content {
+        background: var(--mc-green-dark);
+    }
+
+/* 加载动画 */
+.loading-spinner {
+    width: 16px;
+    height: 16px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    animation: spin 0.8s steps(8) infinite;
+    display: none;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.mc-button.loading .loading-spinner {
+    display: inline-block;
+}
+
+.mc-button.loading .btn-text {
+    opacity: 0.8;
+}
+
+/* 底部区域 */
+.footer-row {
+    margin-top: 24px;
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 错误状态 */
+.mc-button.error .btn-content {
+    background: #a02722;
+}
+
+.mc-button.error .btn-text::after {
+    content: ' !';
+    color: #ff6b6b;
+}
+
+.mc-button.shake {
+    animation: shake 0.4s steps(4);
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-4px);
+    }
+
+    75% {
+        transform: translateX(4px);
+    }
+}
+
+/* 响应式 */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 32px 24px;
+        margin: 32px 16px;
+    }
+
+    .mc-title {
+        font-size: 1.5rem;
+    }
+
+    body::before, body::after {
+        height: 24px;
+    }
+}
